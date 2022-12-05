@@ -9,6 +9,8 @@ TextStyle retroStyle(double size, [Color? color, FontWeight? fw]) {
   );
 }
 
+List wordList = ["FLUTTER", "PROGRAMMING", "PYTHON", "GOOGLE", "RUBY"];
+
 List<String> letters = [
   "A",
   "B",
