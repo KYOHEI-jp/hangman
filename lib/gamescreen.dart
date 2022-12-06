@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hangman/utils.dart';
 
@@ -9,6 +11,12 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  String word = wordList[Random().nextInt(wordList.length)];
+
+  handleText() {
+    String displayWord = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +34,7 @@ class _GameScreenState extends State<GameScreen> {
             iconSize: 40,
             color: Colors.purpleAccent,
             onPressed: () {},
-            icon: Icon(Icons.volume_up_sharp),
+            icon: const Icon(Icons.volume_up_sharp),
           )
         ],
       ),
