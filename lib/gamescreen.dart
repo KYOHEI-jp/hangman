@@ -44,6 +44,21 @@ class _GameScreenState extends State<GameScreen> {
     } else {
       print("You lost");
     }
+
+    bool isWon = true;
+    for (int i = 0; i < word.length; i++) {
+      String char = word[i];
+      if (!guessedAlphabets.contains(char)) {
+        setState(() {
+          isWon = false;
+        });
+        break;
+      }
+    }
+
+    if (isWon) {
+      print("won");
+    }
   }
 
   @override
@@ -83,7 +98,7 @@ class _GameScreenState extends State<GameScreen> {
                 height: 30,
                 child: Center(
                   child: Text(
-                    "12 points",
+                    "$points points",
                     style: retroStyle(15, Colors.white, FontWeight.w700),
                   ),
                 ),
