@@ -12,8 +12,9 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   String word = wordList[Random().nextInt(wordList.length)];
-  List guessedAlphabets = ["f","l"];
-  handleText() {
+  List guessedAlphabets = [];
+
+  String handleText() {
     String displayWord = "";
     for (int i = 0; i < word.length; i++) {
       String char = word[i];
@@ -23,6 +24,7 @@ class _GameScreenState extends State<GameScreen> {
         displayWord += "? ";
       }
     }
+    return displayWord;
   }
 
   @override
@@ -90,7 +92,7 @@ class _GameScreenState extends State<GameScreen> {
                 height: 30,
               ),
               Text(
-                "??????",
+                handleText(),
                 style: retroStyle(35, Colors.white, FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
