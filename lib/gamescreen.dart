@@ -12,9 +12,17 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   String word = wordList[Random().nextInt(wordList.length)];
-
+  List guessedAlphabets = ["f","l"];
   handleText() {
     String displayWord = "";
+    for (int i = 0; i < word.length; i++) {
+      String char = word[i];
+      if (guessedAlphabets.contains(char)) {
+        displayWord += char;
+      } else {
+        displayWord += "? ";
+      }
+    }
   }
 
   @override
