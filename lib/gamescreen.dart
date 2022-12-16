@@ -15,6 +15,15 @@ class _GameScreenState extends State<GameScreen> {
   List guessedAlphabets = [];
   int points = 0;
   int status = 0;
+  List images = [
+    "images/hangman0.png",
+    "images/hangman1.png",
+    "images/hangman2.png",
+    "images/hangman3.png",
+    "images/hangman4.png",
+    "images/hangman5.png",
+    "images/hangman6.png",
+  ];
 
   String handleText() {
     String displayWord = "";
