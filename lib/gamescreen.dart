@@ -25,6 +25,28 @@ class _GameScreenState extends State<GameScreen> {
     "images/hangman6.png",
   ];
 
+  /**
+   * 領域外を押しても動作しない ダイアログを表示
+   */
+  openDialog(String title) {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              title: Text("Youlost"),
+              actions: [
+                FlatButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("また遊んでね！"))
+              ],
+            ),
+          );
+        });
+  }
+
   String handleText() {
     String displayWord = "";
     for (int i = 0; i < word.length; i++) {
@@ -51,7 +73,7 @@ class _GameScreenState extends State<GameScreen> {
         points -= 5;
       });
     } else {
-      print("You lost");
+      openDialog("You lost");
     }
 
     bool isWon = true;
@@ -121,14 +143,14 @@ class _GameScreenState extends State<GameScreen> {
                 fit: BoxFit.cover,
                 color: Colors.white,
                 image: AssetImage(
-                  "images/hangman0.png",
+                  images[status],
                 ),
               ),
               const SizedBox(
                 height: 15,
               ),
               Text(
-                "7 lives left",
+                "${7 - status} lives left",
                 style: retroStyle(18, Colors.grey, FontWeight.w700),
               ),
               const SizedBox(
