@@ -30,24 +30,36 @@ class _GameScreenState extends State<GameScreen> {
    */
   openDialog(String title) {
     return showDialog(
-        barrierDismissible: false,
         context: context,
-        builder: (_) {
-          return WillPopScope(
-            onWillPop: () async => false,
-            child: AlertDialog(
-              title: Text("Youlost"),
-              actions: [
-                FlatButton(
-                   //ライフとポイントを元に戻す
-                    onPressed: () => {
-                          points = 0,
-                          status = 0,
-                          Navigator.pop(context),
-                          setState(() {})
-                        },
-                    child: Text("また遊んでね！"))
-              ],
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              width: MediaQuery.of(context).size.width / 2,
+              height: 180,
+              decoration: BoxDecoration(color: Colors.purpleAccent),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: retroStyle(25, Colors.white, FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Center(
+                        child: Text(
+                          "Play again",
+                          style: retroStyle(20, Colors.white, FontWeight.normal),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         });
