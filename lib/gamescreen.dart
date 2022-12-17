@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:hangman/utils.dart';
 
@@ -11,6 +12,7 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  AudioCache audioCache = AudioCache(prefix: "sounds/");
   String word = wordList[Random().nextInt(wordList.length)];
   List guessedAlphabets = [];
   int points = 0;
@@ -25,11 +27,16 @@ class _GameScreenState extends State<GameScreen> {
     "images/hangman6.png",
   ];
 
+  playSound(String sound) async {
+    await audioCache.play(sound);
+  }
+
   /**
    * 領域外を押しても動作しない ダイアログを表示
    */
   openDialog(String title) {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return Dialog(
@@ -45,15 +52,33 @@ class _GameScreenState extends State<GameScreen> {
                     style: retroStyle(25, Colors.white, FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Your point: $points",
+                    style: retroStyle(25, Colors.white, FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     width: MediaQuery.of(context).size.width / 2,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                        setState(() {
+                          status = 0;
+                          points = 0;
+                          guessedAlphabets.clear();
+                          word = wordList[Random().nextInt(wordList.length)];
+                        });
+                        playSound("sounds/restart.mp3");
+                      },
                       child: Center(
                         child: Text(
                           "Play again",
-                          style: retroStyle(20, Colors.white, FontWeight.normal),
+                          style:
+                              retroStyle(20, Colors.white, FontWeight.normal),
                         ),
                       ),
                     ),
@@ -84,14 +109,17 @@ class _GameScreenState extends State<GameScreen> {
         guessedAlphabets.add(alphabet);
         points += 5;
       });
+      playSound("sounds/correct.mp3");
       guessedAlphabets.add(alphabet);
     } else if (status != 6) {
       setState(() {
         status += 1;
         points -= 5;
       });
+      playSound("sounds/wrong.mp3");
     } else {
       openDialog("You lost");
+      playSound("sounds/lost.mp3");
     }
 
     bool isWon = true;
@@ -106,7 +134,8 @@ class _GameScreenState extends State<GameScreen> {
     }
 
     if (isWon) {
-      print("won");
+      openDialog("Hurray You Won");
+      playSound("sounds/won.mp3");
     }
   }
 
