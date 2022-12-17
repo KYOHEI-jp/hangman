@@ -39,7 +39,13 @@ class _GameScreenState extends State<GameScreen> {
               title: Text("Youlost"),
               actions: [
                 FlatButton(
-                    onPressed: () => Navigator.pop(context),
+                   //ライフとポイントを元に戻す
+                    onPressed: () => {
+                          points = 0,
+                          status = 0,
+                          Navigator.pop(context),
+                          setState(() {})
+                        },
                     child: Text("また遊んでね！"))
               ],
             ),
